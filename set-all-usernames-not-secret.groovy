@@ -11,12 +11,14 @@ if (!systemProvider.empty) {
     println 'Updating credentials in system level credential store...'
     for (domain in systemStore.domains) {
         for (credential in systemStore.getCredentials(domain)) {
-            if (credential.isUsernameSecret()){
-                println "Updating credential: ${credential.id} for username ${credential.username}"
-                credential.setUsernameSecret(false)
-                systemStore.updateCredentials(domain, credential, credential)
-            } else {
-                println "Username ${credential.username} for credential ID ${credential.id} was already not secret."
+            if (credential instanceof com.cloudbees.plugins.credentials.common.StandardUsernameCredentials) {
+                if (credential.isUsernameSecret()){
+                    println "Updating credential: ${credential.id} for username ${credential.username}"
+                    credential.setUsernameSecret(false)
+                    systemStore.updateCredentials(domain, credential, credential)
+                } else {
+                    println "Username ${credential.username} for credential ID ${credential.id} was already not secret."
+                }
             }
         }
     }
@@ -33,12 +35,14 @@ if (!folderExtension.empty) {
         def store = folderProvider.getStore(folder)
         for (domain in store.domains) {
             for (credential in store.getCredentials(domain)) {
-                if (credential.isUsernameSecret()){
-                    println "Updating credential: ${credential.id} for username ${credential.username}"
-                    credential.setUsernameSecret(false)
-                    store.updateCredentials(domain, credential, credential)
-                } else {
-                    println "Username ${credential.username} for credential ID ${credential.id} was already not secret."
+                if (credential instanceof com.cloudbees.plugins.credentials.common.StandardUsernameCredentials) {
+                    if (credential.isUsernameSecret()){
+                        println "Updating credential: ${credential.id} for username ${credential.username}"
+                        credential.setUsernameSecret(false)
+                        store.updateCredentials(domain, credential, credential)
+                    } else {
+                        println "Username ${credential.username} for credential ID ${credential.id} was already not secret."
+                    }
                 }
             }
         }
