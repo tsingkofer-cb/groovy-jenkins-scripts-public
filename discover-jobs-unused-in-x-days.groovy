@@ -12,7 +12,7 @@ for (job in Jenkins.instance.getAllItems(Job.class)) {
 
     if (build != null && build.getTimeInMillis() < cutOffTime) {
         println ""
-        println "Job Name:     " + job.fullName
+        println "Job URL     : " + job.absoluteUrl
         println "Build Number: " + build.number
         println "Job Last Run: " + build.timestampString2
     }
