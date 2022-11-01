@@ -1,7 +1,7 @@
 import hudson.slaves.ComputerLauncher
 import com.cloudbees.jenkins.plugins.sshslaves.SSHConnectionDetails
 
-def dryRun = false
+def dryRun = true
 
 if (dryRun){
   println '*** executing in simulation mode, change dryRun value to false to actually apply changes ***'
