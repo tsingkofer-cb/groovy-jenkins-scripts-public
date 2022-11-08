@@ -47,7 +47,7 @@ for (node in nodes) {
         launcher.getCredentialsId(),
         launcher.getJvmOptions(), 
         launcher.getJavaPath(),
-        launcher.getPrefixStartSlaveCmd().replace("slave.jar", "agent.jar"), 
+        launcher.getPrefixStartSlaveCmd().replace("remoting.jar", "agent.jar"), 
         launcher.getSuffixStartSlaveCmd(), 
         launcher.getLaunchTimeoutSeconds(),
         launcher.getMaxNumRetries(),
