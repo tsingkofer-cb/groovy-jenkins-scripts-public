@@ -41,12 +41,14 @@ for folder in allFolders:
 for folder in checkedFolders:
     print("Folder: " + folder)
     folderResponse = requests.get(folder + 'credentials/api/json?tree=stores[domains[credentials[id,description,typeName]]]', auth=auth).json()
-    folderCredentials = folderResponse["stores"]["folder"]["domains"]["_"]["credentials"]
-    if not folderCredentials:
-        print("    No Credentials have been created on this folder.")
-        print('')
-    for cred in folderCredentials:
-        print('    ID: ' + cred["id"])
-        print('    Description: ' + cred["description"])
-        print('    Credential Type: ' + cred["typeName"])
-        print('')
+    folderDomains = folderResponse["stores"]["folder"]["domains"]
+    for key in folderDomains.keys():
+        folderCredentials = folderDomains[key]["credentials"]
+        if not folderCredentials:
+            print("    No Credentials have been created on this folder.")
+            print('')
+        for cred in folderCredentials:
+            print('    ID: ' + cred["id"])
+            print('    Description: ' + cred["description"])
+            print('    Credential Type: ' + cred["typeName"])
+            print('')
