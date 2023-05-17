@@ -33,6 +33,11 @@ for job in allJobs:
             agentNameEndLocation = lastBuildConsoleText.find(' in', agentNameStartLocation)
             print(job + ',' + lastBuildConsoleText[agentNameStartLocation+11:agentNameEndLocation])
         else:
-            print(job + ',' + "Agent name not found in console text.")
+            agentNameStartLocation = lastBuildConsoleText.find('Building remotely on ')
+            if agentNameStartLocation != -1:
+                agentNameEndLocation = lastBuildConsoleText.find(' in', agentNameStartLocation)
+                print(job + ',' + lastBuildConsoleText[agentNameStartLocation+21:agentNameEndLocation])
+            else:
+                print(job + ',' + "Agent name not found in console text.")
     else:
         print(job + ',' + "No Last Successful build to parse.")
