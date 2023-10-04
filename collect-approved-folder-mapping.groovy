@@ -1,7 +1,7 @@
 import com.cloudbees.hudson.plugins.folder.Folder
 import com.cloudbees.jenkins.plugins.foldersplus.SecurityGrantsFolderProperty;
 
-def outputCsv = true //set to false for more readable script output, true for csv format
+def outputCsv = false //set to false for more readable script output, true for csv format
 
 def folderItems = Jenkins.instance.getAllItems(Folder.class)
 
