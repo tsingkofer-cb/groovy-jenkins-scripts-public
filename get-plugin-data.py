@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser(description="Collect plugin data from Jenkins O
 parser.add_argument('--user', help='CI username', required=True)
 parser.add_argument('--password', help='CI API token, will prompt if not provided')
 parser.add_argument('--useCrumb', action='store_true', help='Enable CSRF crumb support if not using an API token.')
-parser.add_argument('--controllerUrl', help='File containing Jenkins Controller URLs', required=True)
+parser.add_argument('--controllerUrl', help='Jenkins Controller URLs', required=True)
 parser.add_argument('--ciVersion', help='CBCI version to check against for CAP status/tier', required=True)
 
 args = parser.parse_args()
