@@ -57,11 +57,14 @@ for plugin in allPlugins:
     split = plugin.split(":")
     name = split[0]
     version = split[1]
-    pluginDataResponse = requests.get('https://plugins.jenkins.io/api/plugin/' + name).json()
-    buildDate = pluginDataResponse['buildDate']
-    currentInstalls = pluginDataResponse['stats']['currentInstalls']
-    healthScore = pluginHealthJson['plugins'][name]['value']
-    tier = 'community'
-    if name in cbUcJson['envelope']['plugins']:
-        tier = cbUcJson['envelope']['plugins'][name]['tier']
-    print(name+','+version+','+buildDate+','+str(currentInstalls)+','+str(healthScore)+','+tier)
+    try:
+        pluginDataResponse = requests.get('https://plugins.jenkins.io/api/plugin/' + name).json()
+        buildDate = pluginDataResponse['buildDate']
+        currentInstalls = pluginDataResponse['stats']['currentInstalls']
+        healthScore = pluginHealthJson['plugins'][name]['value']
+        tier = 'community'
+        if name in cbUcJson['envelope']['plugins']:
+            tier = cbUcJson['envelope']['plugins'][name]['tier']
+        print(name+','+version+','+buildDate+','+str(currentInstalls)+','+str(healthScore)+','+tier)
+    except:
+        print(name+','+version+',Not Found,Not Found,Not Found,Not Found')
