@@ -18,7 +18,7 @@ sort -u ./*-plugins.csv > plugins_consolidated.csv
 #remove header
 tail -n +2 plugins_consolidated.csv > plugins_consolidated.csv.tmp && mv plugins_consolidated.csv.tmp plugins_consolidated.csv 
 #add header with additional column for number of controllers with plugin version installed
-echo 'Name,Version,Last Release Date,Total Installs,Health Score,Plugin Tier,Number of Controllers' > plugin-report.csv
+echo 'Name,Version,Last Release Date,Total Installs,Health Score,Plugin Tier,Number of Active CVEs,Number of Controllers' > plugin-report.csv
 #collect a count of the number of controllers with each plugin installed and append to row
 while read PLUGIN_DATA; do
   COUNT=$(grep -o "$PLUGIN_DATA" ./*-plugins.csv | wc -l | xargs)

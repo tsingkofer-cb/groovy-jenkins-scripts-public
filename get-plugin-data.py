@@ -50,7 +50,7 @@ else:
 allPlugins = [y for y in (x.strip() for x in pluginResponse.text.splitlines()) if y]
 
 #print csv column headers
-print('Name,Version,Last Release Date,Total Installs,Health Score,Plugin Tier')
+print('Name,Version,Last Release Date,Total Installs,Health Score,Plugin Tier,Active CVEs')
 
 #for each plugin, get data from plugins.jenkins.io
 for plugin in allPlugins:
@@ -61,10 +61,16 @@ for plugin in allPlugins:
         pluginDataResponse = requests.get('https://plugins.jenkins.io/api/plugin/' + name).json()
         buildDate = pluginDataResponse['buildDate']
         currentInstalls = pluginDataResponse['stats']['currentInstalls']
+        activeCves = 0
+        allWarnings = pluginDataResponse['securityWarnings']
+        if allWarnings != None:
+            for warning in allWarnings:
+                if warning['active'] == True:
+                    activeCves = activeCves+1
         healthScore = pluginHealthJson['plugins'][name]['value']
         tier = 'community'
         if name in cbUcJson['envelope']['plugins']:
             tier = cbUcJson['envelope']['plugins'][name]['tier']
-        print(name+','+version+','+buildDate+','+str(currentInstalls)+','+str(healthScore)+','+tier)
+        print(name+','+version+','+buildDate+','+str(currentInstalls)+','+str(healthScore)+','+tier+','+str(activeCves))
     except:
-        print(name+','+version+',Not Found,Not Found,Not Found,Not Found')
+        print(name+','+version+',Not Found,Not Found,Not Found,Not Found,Not Found')
