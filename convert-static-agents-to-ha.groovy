@@ -10,7 +10,7 @@ import com.cloudbees.jenkins.plugins.replication.builds.ReplicatedRetentionStrat
 //Get all agent nodes for this controller
 def nodes = Jenkins.instance.getNodes()
 
-def dryRun = false
+def dryRun = true
 
 if (dryRun){
   println '*** executing in simulation mode, change dryRun value to false to actually apply changes ***'
