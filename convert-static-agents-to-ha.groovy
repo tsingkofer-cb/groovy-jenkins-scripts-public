@@ -18,8 +18,8 @@ if (dryRun){
 }
 
 for (node in nodes) {
+  println node.getNodeName() + ' :\n  # of Executors: ' + node.getNumExecutors() + '\n  Root Directory: ' + node.getRemoteFS()
   if (node.getLauncher().getClass().toString().equals('class hudson.plugins.sshslaves.SSHLauncher')){
-    println node.getNodeName() + ' :\n  # of Executors: ' + node.getNumExecutors() + '\n  Root Directory: ' + node.getRemoteFS()
     if(node.getNumExecutors() > 1){
         println '  ' + node.getNodeName() + ' currently configured with ' + node.getNumExecutors() + ' executors. Setting to 1 and splitting into ' + node.getNumExecutors() + ' separate nodes.'
         if(!dryRun){
@@ -96,7 +96,7 @@ for (node in nodes) {
         println ''
     }
   } else {
-    println node.getNodeName() + ':\n  Skipping agent since this script only supports agents using the SSH Build Agents plugin.\n'
+    println '  Skipping agent since this script only supports agents using the SSH Build Agents plugin.\n'
   }
 }
 
