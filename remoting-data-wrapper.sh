@@ -2,8 +2,8 @@
 # - find-non-compliant-remoting-versions.py
 # - controllers.txt (containing one controller URL per line, ending with a single blank line.)
 
-USERNAME=tsingkofer
-PASSWORD=1173344d9c79c90338f1849de5a00a467d
+USERNAME=
+PASSWORD=
 
 while read URL; do
   HOST=$(echo ${URL:8} | tr "/" -)
