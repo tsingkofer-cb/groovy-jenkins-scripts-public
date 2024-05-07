@@ -68,8 +68,8 @@ def write_csv(output, plugin_data):
         writer.writerow(data)
 
 @click.command()
-@click.option('--user', prompt=True, help='CI username')
-@click.option('--password', prompt=True, hide_input=True, help='CI API token, will prompt if not provided')
+@click.option('--user', prompt=True, envvar='USER', help='CI username')
+@click.option('--password', prompt=True, hide_input=True, envvar='PASSWORD', help='CI API token, will prompt if not provided')
 @click.option('--crumb', is_flag=True, help='Enable CSRF crumb support if not using an API token.')
 @click.option('--controllerurl', prompt=True, help='Jenkins Controller URLs')
 @click.option('--civersion', prompt=True, help='CBCI version to check against for CAP status/tier')
