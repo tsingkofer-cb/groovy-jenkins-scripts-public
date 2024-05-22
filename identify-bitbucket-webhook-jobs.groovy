@@ -1,8 +1,8 @@
 import com.atlassian.bitbucket.jenkins.internal.trigger.BitbucketWebhookTriggerImpl;
 
-println 'Listing all jobs with a BitBucket Webhook Trigger set... \n'
+println 'Listing all Freestyle jobs with a BitBucket Webhook Trigger set... \n'
 
-Jenkins.instance.getAllItems(Job.class).each{
+Jenkins.instance.getAllItems(AbstractProject.class).each{
   if (isTriggerEnabled(it)) {  
     println it.fullName
   }
