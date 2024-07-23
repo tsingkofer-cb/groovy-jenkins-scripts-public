@@ -6,7 +6,7 @@ import nectar.plugins.rbac.groups.GroupContainerLocator
 def groupPrefix = 'jenkins-'
 def userPrefix = 'svc'
 // When dryRun = true, no actual changes will be made to the system, but you will see simulated output.
-def dryRun = true
+def dryRun = false
 
 Jenkins.instance.getAllItems(AbstractFolder.class).each{
   //Search through each folder and collect the RBAC data for folder groups
@@ -36,6 +36,7 @@ def findAllGroups(GroupContainer fpgc, String groupPrefix, String userPrefix, Bo
         }
         println '    removing group entries...'
         it.setUsers(groupUsers)
+        it.save()
       } else if (usersToRemove && dryRun) {
         println '    Dry Run enabled, skipping actual removal step.'
       }
@@ -56,6 +57,7 @@ def findAllGroups(GroupContainer fpgc, String groupPrefix, String userPrefix, Bo
         }
         println '    removing group entries...'
         it.setGroups(groupGroups)
+        it.save()
       } else if (groupsToRemove && dryRun) {
         println '    Dry Run enabled, skipping actual removal step.'
       }
@@ -88,6 +90,7 @@ def findAllGroups(GroupContainer fpgc, String groupPrefix, String userPrefix, Bo
           }
           println '    removing member entries...'
           it.setMembers(groupMembers)
+          it.save()
         }
         if(membersToConvertToGroups){
           println '    converting valid group entries...'
@@ -97,6 +100,7 @@ def findAllGroups(GroupContainer fpgc, String groupPrefix, String userPrefix, Bo
           currentGroups.addAll(membersToConvertToGroups)
           //set to save
           it.setGroups(currentGroups)
+          it.save()
         }
         if(membersToConvertToUsers){
           println '    converting valid service account entries...'
@@ -106,6 +110,7 @@ def findAllGroups(GroupContainer fpgc, String groupPrefix, String userPrefix, Bo
           currentUsers.addAll(membersToConvertToUsers)
           //set to save
           it.setUsers(currentUsers)
+          it.save()
         }
       } else if ((membersToRemove || membersToConvertToGroups || membersToConvertToUsers) && dryRun) {
         println '    Dry Run enabled, skipping actual removal step.'
