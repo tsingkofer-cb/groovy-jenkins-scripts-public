@@ -6,7 +6,7 @@ import nectar.plugins.rbac.groups.GroupContainerLocator
 def groupPrefix = 'jenkins-'
 def userPrefix = 'svc'
 // When dryRun = true, no actual changes will be made to the system, but you will see simulated output.
-def dryRun = false
+def dryRun = true
 
 Jenkins.instance.getAllItems(AbstractFolder.class).each{
   //Search through each folder and collect the RBAC data for folder groups
