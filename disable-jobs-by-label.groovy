@@ -11,7 +11,7 @@ if(labels in String) {
     labels = (labels.contains(',')) ? labels.split(',') : [labels]
 }
 
-println 'Searching for jobs containing ANY of the following labels:'
+println 'Searching for enabled jobs containing ANY of the following labels:'
 labels.each { String label ->
   println '  ' + label
 }
@@ -25,6 +25,7 @@ jobCount = 0
 projects = [] as Set
 //getAllItems searches a global lookup table of items regardless of folder structure
 Jenkins.instance.getAllItems(Job.class).each { Job job ->
+  if (!job.disabled) {
     Boolean labelFound = false
     String jobLabelString
     if(debug){  
@@ -55,13 +56,14 @@ Jenkins.instance.getAllItems(Job.class).each { Job job ->
 
     labelFound = true in results
     if(labelFound) {
-        projects << job.fullName
+        projects << job.getAbsoluteUrl()
         jobCount++
         if (disableJobs){
           job.disabled = true
           job.save()
         }
     }
+  }  
 }
 println '**** ' + jobCount + ' jobs using targetted label(s): ****'
 println(projects.join('\n'))
