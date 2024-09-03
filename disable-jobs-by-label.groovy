@@ -1,31 +1,27 @@
+//This script will search for Freestyle and Pipeline jobs only to identify and optionally disable jobs using a given label.
+
 import hudson.model.Job
-// when false, script will only list jobs using a defined label. When true, jobs will be disabled.
-disableJobs = false
 
+//User Inputs/Settings
+disableJobs = false // when false, script will only list jobs using a defined label. When true, jobs will be disabled.
 debug = false //adds a little extra logging for troubleshooting purposes.
-
-//can search for one or more (comma separated) labels at a time
-labels = ['jnlp-agent']
-
-//by default it searches for any of the labels from the list
-//set evaluateAnd to true to require all labels much exist in the job
-evaluateOr = true
+labels = ['label1','label2'] //can search for one or more (comma separated) labels at a time
 
 if(labels in String) {
     labels = (labels.contains(',')) ? labels.split(',') : [labels]
 }
-if(evaluateOr in String) {
-    evaluateOr = (evaluateOr != 'false')
+
+println 'Searching for jobs containing ANY of the following labels:'
+labels.each { String label ->
+  println '  ' + label
 }
 
 //type check user defined parameters/bindings
 if(!(labels in List) || (false in labels.collect { it in String } )) {
     throw new Exception('PARAMETER ERROR: labels must be a list of strings.')
 }
-if(!(evaluateOr in Boolean)) {
-    throw new Exception('PARAMETER ERROR: evaluateOr must be a boolean.')
-}
 
+jobCount = 0
 projects = [] as Set
 //getAllItems searches a global lookup table of items regardless of folder structure
 Jenkins.instance.getAllItems(Job.class).each { Job job ->
@@ -57,27 +53,21 @@ Jenkins.instance.getAllItems(Job.class).each { Job job ->
       }
     }
 
-    if(evaluateOr) {
-        //evaluate if any of the labels exist in job
-        labelFound = true in results
-    } else {
-        //evaluate requiring all labels to exist in job
-        labelFound = !(false in results)
-    }
-
+    labelFound = true in results
     if(labelFound) {
         projects << job.fullName
+        jobCount++
         if (disableJobs){
           job.disabled = true
           job.save()
         }
     }
 }
-println '**Jobs using targetted label(s):**'
+println '**** ' + jobCount + ' jobs using targetted label(s): ****'
 println(projects.join('\n'))
 if (disableJobs){
   println ''
-  println 'All identified jobs have been disabled.'
+  println '**** All identified jobs have been disabled. ****'
 }
 
 //null so no result shows up
