@@ -24,8 +24,9 @@ if(!(labels in List) || (false in labels.collect { it in String } )) {
 jobCount = 0
 projects = [] as Set
 //getAllItems searches a global lookup table of items regardless of folder structure
-Jenkins.instance.getAllItems(Job.class).each { Job job ->
-  if (!job.disabled) {
+List enabledJobs = Jenkins.instance.getAllItems(Job.class).findAll { Job item ->
+  item.hasProperty('disabled') && !item.disabled }
+for (job in enabledJobs) {
     Boolean labelFound = false
     String jobLabelString
     if(debug){  
@@ -46,7 +47,7 @@ Jenkins.instance.getAllItems(Job.class).each { Job job ->
           }
       }
     } else {
-      return
+      continue
     }
     List results = labels.collect { label ->
       if(jobLabelString){  
@@ -62,8 +63,7 @@ Jenkins.instance.getAllItems(Job.class).each { Job job ->
           job.disabled = true
           job.save()
         }
-    }
-  }  
+    } 
 }
 println '**** ' + jobCount + ' jobs using targetted label(s): ****'
 println(projects.join('\n'))
