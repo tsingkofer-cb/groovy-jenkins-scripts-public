@@ -15,8 +15,10 @@ for (agent in hudson.model.Hudson.instance.slaves) {
       println agent.name
       if (printExplaination) {
         println "  No build history found for this agent."
-        println "  Last offline cause was '" + comp.getOfflineCauseReason() + "'"
-        println "  This occured at: " + comp.getOfflineCause().getTime()
+        if(comp.getOfflineCauseReason() && comp.getOfflineCause().getTime()){
+          println "  Last offline cause was '" + comp.getOfflineCauseReason() + "'"
+          println "  This occured at: " + comp.getOfflineCause().getTime()
+        }
       }
     } else {
       lastBuild = comp.getBuilds().getLastBuild()
