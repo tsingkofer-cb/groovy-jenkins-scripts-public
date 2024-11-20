@@ -26,6 +26,8 @@ Jenkins.instance.getAllItems(OrganizationFolder.class).each {
   }
   if(!dryRun){
     it.save()
+    it.getComputation().run()
+    //sleep 5000 
   }
 }
 
@@ -50,6 +52,8 @@ Jenkins.instance.getAllItems(WorkflowMultiBranchProject.class).each {
   }
   if(!dryRun){
     it.save()
+    it.getIndexing().run()
+    //sleep 5000
   }
 }
 return
