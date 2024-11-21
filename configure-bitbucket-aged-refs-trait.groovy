@@ -19,15 +19,13 @@ Jenkins.instance.getAllItems(OrganizationFolder.class).each {
       newTraits.add(new BitbucketAgedRefsTrait('60'))
       if(!dryRun){
         source.setTraits(newTraits)
+        it.save()
+        it.getComputation().run()
+        sleep 5000 
       }
     } else {
       println '  Branch age limit is already set.'
     }
-  }
-  if(!dryRun){
-    it.save()
-    it.getComputation().run()
-    //sleep 5000 
   }
 }
 
@@ -45,15 +43,13 @@ Jenkins.instance.getAllItems(WorkflowMultiBranchProject.class).each {
       newTraits.add(new BitbucketAgedRefsTrait('60'))
       if(!dryRun){
         scmSource.setTraits(newTraits)
+        it.save()
+        it.getIndexing().run()
+        sleep 5000
       }
     } else {
       println '  Branch age limit is already set.'
     }
-  }
-  if(!dryRun){
-    it.save()
-    it.getIndexing().run()
-    //sleep 5000
   }
 }
 return
