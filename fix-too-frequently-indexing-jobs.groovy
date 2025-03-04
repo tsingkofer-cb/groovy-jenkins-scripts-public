@@ -43,14 +43,16 @@ Jenkins.instance.getAllItems().each{
                 }
               }
             } else {
-              calculatedInterval = trigger.tabs.next().getTimeInMillis()-trigger.tabs.previous().getTimeInMillis()
-              if (calculatedInterval < maxIntervalMillis){          
-                println ''
-                println it.absoluteUrl
-                println it.getClass()
-                println trigger.spec
-                println '** This job seems to be running more frequently than the max allowed interval. Please review. **' 
-                println '   Calculated Interval: ' + calculatedInterval
+              if (trigger.tabs.next() && trigger.tabs.previous()){
+                calculatedInterval = trigger.tabs.next().getTimeInMillis()-trigger.tabs.previous().getTimeInMillis()
+                if (calculatedInterval < maxIntervalMillis){          
+                  println ''
+                  println it.absoluteUrl
+                  println it.getClass()
+                  println trigger.spec
+                  println '** This job seems to be configured to run more frequently than the max allowed interval. Please review. **' 
+                  println '   Calculated Interval: ' + calculatedInterval + 'ms, or ' + calculatedInterval/1000/60/60 + ' hours.'
+                }
               }
             }
       	}
