@@ -1,14 +1,16 @@
 def dryRun = true
 
 for (job in Jenkins.instance.getAllItems(Job.class)) {
-  println job.fullName
-  if (!job.disabled) {
-    println '  Disabling job.'
-    if (!dryRun){
-      job.disabled = true
-      job.save()
+  if (job.getClass() != hudson.model.ExternalJob) {
+    println job.fullName
+    if (!job.disabled) {
+      println '  Disabling job.'
+      if (!dryRun){
+        job.disabled = true
+        job.save()
+      }
+    } else {
+   	  println '  Already disabled.'
     }
-  } else {
-  	println '  Already disabled.'
   }
 }
