@@ -21,7 +21,6 @@ Jenkins.instance.getAllItems(OrganizationFolder.class).each {
         source.setTraits(newTraits)
         it.save()
         it.getComputation().run()
-        sleep 5000 
       }
     } else {
       println '  Branch age limit is already set.'
@@ -45,7 +44,6 @@ Jenkins.instance.getAllItems(WorkflowMultiBranchProject.class).each {
         scmSource.setTraits(newTraits)
         it.save()
         it.getIndexing().run()
-        sleep 5000
       }
     } else {
       println '  Branch age limit is already set.'
