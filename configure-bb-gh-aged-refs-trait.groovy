@@ -1,3 +1,5 @@
+//Will add the Bitbucket or GitHub AgedRefsTrait to multibranch pipelines and org jobs that don't already have one set. (2 separate aged ref plugins required)
+
 import org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject;
 import jenkins.branch.OrganizationFolder;
 import org.jenkinsci.plugins.scm_filter.BitbucketAgedRefsTrait;
