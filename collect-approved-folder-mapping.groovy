@@ -13,14 +13,16 @@ for (folderItem in folderItems) {
   SecurityGrantsFolderProperty securityProperty = SecurityGrantsFolderProperty.of(folderItem)
   if (securityProperty != null) {
     securityProperty.getSecurityGrants().each {
-      //For more readable script output instead of csv
-      if(!outputCsv){
-        println "  SecurityGrant : "
-        println "    Folder: " + it.getFolder().fullName
-        println "    Node: " + it.getNode().name
-      }
-      if(outputCsv){
-        println it.getNode().name + ',' + it.getFolder().fullName
+      if(it.getNode() != null) {
+        //For more readable script output instead of csv
+        if(!outputCsv){
+          println "  SecurityGrant : "
+          println "    Folder: " + it.getFolder().fullName
+          println "    Node: " + it.getNode().name
+        }
+        if(outputCsv){
+          println it.getNode().name + ',' + it.getFolder().fullName
+        }
       }
     }
   }
