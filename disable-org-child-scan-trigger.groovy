@@ -4,7 +4,7 @@ dryRun = true
 
 println 'Listing all org jobs with timer set'
 if (!dryRun){
-  println 'Will also disable cron setting \n'
+  println 'Will also disable Child Scan Trigger timer setting \n'
 }
 
 Jenkins.instance.getAllItems(jenkins.branch.OrganizationFolder.class).each {
